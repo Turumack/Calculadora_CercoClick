@@ -1,107 +1,155 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Calculadora Básica</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-    }
-    .calculator {
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      width: 260px;
-    }
-    .display {
-      width: 100%;
-      height: 40px;
-      font-size: 1.5em;
-      margin-bottom: 15px;
-      text-align: right;
-      padding: 5px;
-      box-sizing: border-box;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-    button {
-      padding: 15px 0;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 5px;
-      background: #ececec;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover {
-      background: #d4d4d4;
-    }
-    .equal {
-      background: #4CAF50;
-      color: white;
-    }
-    .equal:hover {
-      background: #388e3c;
-    }
-    .clear {
-      background: #f44336;
-      color: white;
-    }
-    .clear:hover {
-      background: #c62828;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CercoClick - Calculadora de Malla</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f0f0f0; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { text-align: center; color: #1c7c1c; }
+        label, select, input, button { display: block; margin-top: 10px; width: 100%; padding: 8px; box-sizing: border-box; }
+        select, input { border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #1c7c1c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #1a6b1a; }
+        .result { margin-top: 20px; padding: 15px; border: 2px solid #1c7c1c; border-radius: 4px; text-align: center; font-size: 1.2em; font-weight: bold; }
+        .section { margin-top: 25px; border-top: 1px solid #ccc; padding-top: 15px; }
+    </style>
 </head>
 <body>
-  <div class="calculator">
-    <input type="text" class="display" id="display" disabled>
-    <div class="buttons">
-      <button onclick="append('7')">7</button>
-      <button onclick="append('8')">8</button>
-      <button onclick="append('9')">9</button>
-      <button onclick="append('/')">÷</button>
-      <button onclick="append('4')">4</button>
-      <button onclick="append('5')">5</button>
-      <button onclick="append('6')">6</button>
-      <button onclick="append('*')">×</button>
-      <button onclick="append('1')">1</button>
-      <button onclick="append('2')">2</button>
-      <button onclick="append('3')">3</button>
-      <button onclick="append('-')">−</button>
-      <button onclick="append('0')">0</button>
-      <button onclick="append('.')">.</button>
-      <button onclick="calculate()" class="equal">=</button>
-      <button onclick="append('+')">+</button>
-      <button onclick="clearDisplay()" class="clear" style="grid-column: span 4;">C</button>
+    <div class="container">
+        <h1>CercoClick</h1>
+        <p style="text-align: center; color: #555;">Tu seguridad, a un clic de distancia.</p>
+
+        <div class="section">
+            <h2>Calculadora de Presupuesto</h2>
+            <p style="color: #777;">Selecciona las especificaciones de la malla e introduce los metros que necesitas para obtener un presupuesto final estimado (incluye margen y envío).</p>
+
+            <div class="input-group">
+                <label for="calibre">Calibre del Alambre:</label>
+                <select id="calibre">
+                    <option value="9">Calibre 9 (Máxima Seguridad)</option>
+                    <option value="10.5">Calibre 10.5 (Seguridad Alta)</option>
+                    <option value="12.5">Calibre 12.5 (Estándar Residencial)</option>
+                    <option value="14">Calibre 14 (Económico/Estético)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="altura">Altura de la Malla (metros):</label>
+                <select id="altura">
+                    <option value="1.00">1.00m</option>
+                    <option value="1.20">1.20m</option>
+                    <option value="1.40">1.40m</option>
+                    <option value="1.60">1.60m</option>
+                    <option value="1.80">1.80m</option>
+                    <option value="2.00">2.00m</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="metros">Metros Lineales Requeridos:</label>
+                <input type="number" id="metros" min="1" value="20">
+            </div>
+
+            <button onclick="calcularPresupuesto()">Calcular Presupuesto</button>
+
+            <div id="resultado" class="result" style="display: none;">
+                <!-- El resultado se inyecta aquí -->
+            </div>
+        </div>
     </div>
-  </div>
-  <script>
-    const display = document.getElementById('display');
-    function append(char) {
-      display.value += char;
-    }
-    function clearDisplay() {
-      display.value = '';
-    }
-    function calculate() {
-      try {
-        display.value = eval(display.value).toString();
-      } catch {
-        display.value = 'Error';
-      }
-    }
-  </script>
+
+    <script>
+        
+        const PRECIOS_MALLA = {
+            // Precio Final Estimado POR ROLLO DE 20M (Incluye: Costo Base + 30% Margen + Envío)
+            // Calibre 9 (El más grueso, más caro)
+            "9": {
+                "1.00": 465000,
+                "1.20": 558000,
+                "1.40": 651000,
+                "1.60": 744000,
+                "1.80": 837000,
+                "2.00": 930000 
+            },
+            // Calibre 10.5
+            "10.5": {
+                "1.00": 345000,
+                "1.20": 414000,
+                "1.40": 483000,
+                "1.60": 552000,
+                "1.80": 621000,
+                "2.00": 690000 
+            },
+            // Calibre 12.5
+            "12.5": {
+                "1.00": 255000,
+                "1.20": 306000,
+                "1.40": 357000,
+                "1.60": 408000,
+                "1.80": 459000,
+                "2.00": 510000 
+            },
+            // Calibre 14 (El más delgado, más económico)
+            "14": {
+                "1.00": 195000,
+                "1.20": 234000,
+                "1.40": 273000,
+                "1.60": 312000,
+                "1.80": 351000,
+                "2.00": 390000 
+            }
+        };
+
+        const LONGITUD_ROLLO = 20; 
+
+        function calcularPresupuesto() {
+            const calibre = document.getElementById('calibre').value;
+            const altura = document.getElementById('altura').value;
+            const metrosRequeridos = parseFloat(document.getElementById('metros').value);
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (isNaN(metrosRequeridos) || metrosRequeridos <= 0) {
+                resultadoDiv.style.display = 'block';
+                resultadoDiv.innerHTML = "Por favor, introduce una cantidad válida de metros.";
+                return;
+            }
+
+            // 1. Obtener el precio del rollo
+            const precioPorRollo = PRECIOS_MALLA[calibre] ? PRECIOS_MALLA[calibre][altura] : 0;
+            
+            if (precioPorRollo === 0) {
+                resultadoDiv.style.display = 'block';
+                resultadoDiv.innerHTML = "Error: Precio no encontrado para la combinación seleccionada.";
+                return;
+            }
+
+            // 2. Calcular la cantidad de rollos (siempre redondeando hacia arriba)
+            const numRollos = Math.ceil(metrosRequeridos / LONGITUD_ROLLO);
+
+            // 3. Calcular el costo total
+            const costoTotal = numRollos * precioPorRollo;
+
+            // 4. Formatear la moneda a pesos colombianos (COP)
+            const formatoCOP = new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0
+            });
+
+            const costoFormateado = formatoCOP.format(costoTotal);
+
+            // 5. Mostrar el resultado
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.innerHTML = `
+                <p>Tu Presupuesto Estimado:</p>
+                <p style="color: #1c7c1c; font-size: 1.5em; margin: 10px 0;">${costoFormateado}</p>
+                <p style="font-size: 0.9em; color: #555;">(Basado en ${numRollos} rollo(s) de 20 metros)</p>
+                <p style="font-size: 0.8em; color: #777;">*Este precio incluye margen del 30% y envío estimado.</p>
+            `;
+        }
+
+    </script>
 </body>
 </html>
