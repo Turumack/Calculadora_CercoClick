@@ -4,29 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CercoClick - Calculadora de Malla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f0f0f0; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1, h2 { text-align: center; color: #1c7c1c; }
-        label, select, input, button { display: block; margin-top: 10px; width: 100%; padding: 8px; box-sizing: border-box; }
-        select, input { border: 1px solid #ccc; border-radius: 4px; }
-        button { background-color: #1c7c1c; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        button:hover { background-color: #1a6b1a; }
-        .result { margin-top: 20px; padding: 15px; border: 2px solid #1c7c1c; border-radius: 4px; text-align: center; font-size: 1.2em; font-weight: bold; }
-        .section { margin-top: 25px; border-top: 1px solid #ccc; padding-top: 15px; }
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #e0ecec 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            max-width: 350px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(30, 124, 30, 0.15);
+            margin: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .logo-area svg {
+            width: 32px;
+            height: 32px;
+        }
+        h1 {
+            font-weight: 700;
+            font-size: 1.5em;
+            color: #1c7c1c;
+            margin: 0;
+        }
+        .subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 1em;
+            margin-bottom: 14px;
+        }
+        h2 {
+            font-size: 1.05em;
+            margin: 10px 0 2px 0;
+            color: #277c27;
+            text-align: center;
+        }
+        .section {
+            background: #f6fef6;
+            padding: 20px 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(44, 124, 44, 0.06);
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 0.97em;
+            color: #277c27;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1.5px solid #b8e4b8;
+            border-radius: 7px;
+            font-size: 1em;
+            background: #f3f9f3;
+            transition: border-color 0.2s;
+            margin-top: 2px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        select:focus, input[type="number"]:focus {
+            border-color: #277c27;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.08em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #54b954 0%, #277c27 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 2px 8px rgba(44, 124, 44, 0.09);
+            transition: background 0.2s, transform 0.1s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #277c27 0%, #54b954 100%);
+            transform: scale(1.03);
+        }
+        .result {
+            margin-top: 18px;
+            padding: 18px 12px;
+            border: 2px dashed #54b954;
+            border-radius: 10px;
+            background: #f0fff0;
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #277c27;
+            box-shadow: 0 1px 5px rgba(44, 124, 44, 0.04);
+        }
+        .result p {
+            margin: 6px 0;
+        }
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100vw;
+                padding: 14px;
+            }
+            .section {
+                padding: 12px 6px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>CercoClick</h1>
-        <p style="text-align: center; color: #555;">Tu seguridad, a un clic de distancia.</p>
+        <div class="logo-area">
+            <!-- Simple SVG icon for fence/malla -->
+            <svg viewBox="0 0 32 32" fill="none">
+                <rect x="5" y="7" width="22" height="18" rx="4" stroke="#1c7c1c" stroke-width="2" fill="#e5fbe5"/>
+                <path d="M7 10L25 22M25 10L7 22" stroke="#1c7c1c" stroke-width="2"/>
+            </svg>
+            <h1>CercoClick</h1>
+        </div>
+        <div class="subtitle">Tu seguridad, a un clic de distancia.</div>
 
         <div class="section">
             <h2>Calculadora de Presupuesto</h2>
-            <p style="color: #777;">Selecciona las especificaciones de la malla e introduce los metros que necesitas para obtener un presupuesto final estimado (incluye margen y envío).</p>
-
             <div class="input-group">
-                <label for="calibre">Calibre del Alambre:</label>
+                <label for="calibre">Calibre del Alambre</label>
                 <select id="calibre">
                     <option value="9">Calibre 9 (Máxima Seguridad)</option>
                     <option value="10.5">Calibre 10.5 (Seguridad Alta)</option>
@@ -36,7 +155,7 @@
             </div>
 
             <div class="input-group">
-                <label for="altura">Altura de la Malla (metros):</label>
+                <label for="altura">Altura de la Malla (metros)</label>
                 <select id="altura">
                     <option value="1.00">1.00m</option>
                     <option value="1.20">1.20m</option>
@@ -48,7 +167,7 @@
             </div>
 
             <div class="input-group">
-                <label for="metros">Metros Lineales Requeridos:</label>
+                <label for="metros">Metros Lineales Requeridos</label>
                 <input type="number" id="metros" min="1" value="20">
             </div>
 
@@ -61,10 +180,7 @@
     </div>
 
     <script>
-        
         const PRECIOS_MALLA = {
-            // Precio Final Estimado POR ROLLO DE 20M (Incluye: Costo Base + 30% Margen + Envío)
-            // Calibre 9 (El más grueso, más caro)
             "9": {
                 "1.00": 465000,
                 "1.20": 558000,
@@ -73,7 +189,6 @@
                 "1.80": 837000,
                 "2.00": 930000 
             },
-            // Calibre 10.5
             "10.5": {
                 "1.00": 345000,
                 "1.20": 414000,
@@ -82,7 +197,6 @@
                 "1.80": 621000,
                 "2.00": 690000 
             },
-            // Calibre 12.5
             "12.5": {
                 "1.00": 255000,
                 "1.20": 306000,
@@ -91,7 +205,6 @@
                 "1.80": 459000,
                 "2.00": 510000 
             },
-            // Calibre 14 (El más delgado, más económico)
             "14": {
                 "1.00": 195000,
                 "1.20": 234000,
@@ -116,7 +229,6 @@
                 return;
             }
 
-            // 1. Obtener el precio del rollo
             const precioPorRollo = PRECIOS_MALLA[calibre] ? PRECIOS_MALLA[calibre][altura] : 0;
             
             if (precioPorRollo === 0) {
@@ -125,13 +237,9 @@
                 return;
             }
 
-            // 2. Calcular la cantidad de rollos (siempre redondeando hacia arriba)
             const numRollos = Math.ceil(metrosRequeridos / LONGITUD_ROLLO);
-
-            // 3. Calcular el costo total
             const costoTotal = numRollos * precioPorRollo;
 
-            // 4. Formatear la moneda a pesos colombianos (COP)
             const formatoCOP = new Intl.NumberFormat('es-CO', {
                 style: 'currency',
                 currency: 'COP',
@@ -140,16 +248,14 @@
 
             const costoFormateado = formatoCOP.format(costoTotal);
 
-            // 5. Mostrar el resultado
             resultadoDiv.style.display = 'block';
             resultadoDiv.innerHTML = `
                 <p>Tu Presupuesto Estimado:</p>
-                <p style="color: #1c7c1c; font-size: 1.5em; margin: 10px 0;">${costoFormateado}</p>
-                <p style="font-size: 0.9em; color: #555;">(Basado en ${numRollos} rollo(s) de 20 metros)</p>
-                <p style="font-size: 0.8em; color: #777;">*Este precio incluye margen del 30% y envío estimado.</p>
+                <p style="color:#1c7c1c;font-size:1.4em;margin:8px 0;">${costoFormateado}</p>
+                <p style="font-size:0.97em;color:#277c27;">(Basado en ${numRollos} rollo(s) de 20 metros)</p>
+                <p style="font-size:0.85em;color:#888;">*Incluye margen del 30% y envío estimado.</p>
             `;
         }
-
     </script>
 </body>
 </html>
